@@ -5,7 +5,7 @@ clc
 clear
 
 R1 = 100e3;
-R2 = 1e3;
+R2 = 10e3;
 C = 10e-6;
 
 tstep = 0.001;
@@ -29,9 +29,13 @@ Time_limit = 0.2;
 Uin = t(1 : Nt/2)*k;
 Uin(Nt/2 : Nt) = t(Nt/2 : Nt)*(-k) + 40;
 Uout = zeros(1,Nt);
-circ_num_out  =[];
-circuit_num = 1;
+
+
+circ_num_out  =[]; 
+circuit_num = 1;   % Номер схемы
+
 local_time = 0;
+
 for i = 1 : Nt-1
     time = t(i)
 
