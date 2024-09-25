@@ -1,7 +1,14 @@
 clc
 clear
-a = Current_source(5);
-a.get_product(7)
+
+a = Current_source(4);
+% a.set_waveform("tri")
+a.get_wave()
+
+
+
+
+
 
 
 

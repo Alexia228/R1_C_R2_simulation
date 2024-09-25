@@ -34,9 +34,10 @@ for i = 1 : Nt-1
       tstep/(R*C) * (Io(i) - Iout(i));
     Uout(i+1) = tstep/(R*C) * (Uin(i) - Uout(i)) + Uout(i);
     
-    if Uout(i) > Ulim
-       Io = Amplitude*(t >= t(i) & t <= t(i) + Period);
-    end
+    %Условно такой класс:   
+    Io = cs.get_value(Uout, time);
+
+
 end
 
 hold on

@@ -1,7 +1,7 @@
 classdef Current_source < handle
     %--------------------------------PUBLIC--------------------------------
     methods (Access = public)
-        %Конструктор класса
+        
         function obj = Current_source(amp)
             if ~isnumeric(amp)
                 error('wrong argument type')
@@ -22,15 +22,34 @@ classdef Current_source < handle
             end
         end
 
-        function product = get_product(obj, val)
-            product = val * obj.amp;
+        function summ = summ_amp(varargin)
+            summ = 0;
+            for i = 1 : nargin
+            summ = summ + varargin{i}.amp;
+            end
         end
+
+        function set_waveform(obj, form)
+            obj.waveform = form;
+        end
+        
+        function get_wave(obj)
+            
+            if obj.waveform == "rect"
+               disp('rect')
+            elseif obj.waveform == "tri"
+               disp('tri')
+            end
+        end
+
     end
 
     %-------------------------------PRIVATE--------------------------------
     properties (Access = private)
         amp double = 0;
         active logical = false;
+        waveform string = "rect";
+        
     end
 
     methods (Access = private)

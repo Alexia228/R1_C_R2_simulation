@@ -23,12 +23,15 @@ to = 300;
 first = 0;
 second = 0;
 
-Time_limit = 0.2;
+Time_limit = 0.4;
 
 %Кривое создание треугольного импульса
 Uin = t(1 : Nt/2)*k;
 Uin(Nt/2 : Nt) = t(Nt/2 : Nt)*(-k) + 40;
 Uout = zeros(1,Nt);
+
+k1 = 0;
+k2 = 0;
 
 
 circ_num_out  =[]; 
