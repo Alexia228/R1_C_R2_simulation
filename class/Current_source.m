@@ -1,10 +1,7 @@
-
-
-
-
 classdef Current_source < handle
     %--------------------------------PUBLIC--------------------------------
     methods (Access = public)
+        %Конструктор класса
         function obj = Current_source(amp)
             if ~isnumeric(amp)
                 error('wrong argument type')
@@ -23,6 +20,10 @@ classdef Current_source < handle
             else
                 value = 0;
             end
+        end
+
+        function product = get_product(obj, val)
+            product = val * obj.amp;
         end
     end
 
