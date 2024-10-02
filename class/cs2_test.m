@@ -1,11 +1,13 @@
 
-
+clc
+clear
 
 cs2 = Current_source2(2);
 
 
 time_array = 0:0.001:10;
-voltage_array = linspace(-1, 3, numel(time_array));
+voltage_array = linspace(-1, 5, numel(time_array));
+% plot(time_array, voltage_array)
 
 k = 1;
 current_array = zeros(size(time_array));
@@ -20,10 +22,13 @@ for i = 1:numel(time_array)
 end
 
 
+r = cumsum(current_array)*0.001;
 figure
 hold on
-plot(time_array, voltage_array)
-plot(time_array, current_array)
+% plot(time_array, voltage_array)
+% plot(time_array, current_array)
+plot(voltage_array, r)
+
 
 
 
