@@ -38,8 +38,11 @@ classdef Current_source < handle
             end
 
             if obj.output_active
+                diff = voltage - obj.v_lim;
+                k = diff;
                 t = time - obj.local_time;
-                value = obj.pulse(obj.pulse_type, t);
+
+                value = obj.pulse(obj.pulse_type, t, k);
                 value = value*obj.polarity;
             else
                 value = 0;
@@ -54,8 +57,8 @@ classdef Current_source < handle
     properties (Access = private)
         amp double = 0;
         polarity double = 1;
-        period double = 5; % s
-        v_lim  double =1; % V
+        period double; % s
+        v_lim  double = 1; % V
 
         pulse_type string = "gauss"
         local_time double = 0; % s
@@ -64,7 +67,7 @@ classdef Current_source < handle
 
     methods (Access = private)
 
-        function value = pulse(obj, pulse_type, t)
+        function value = pulse(obj, pulse_type, t, k)
             if pulse_type == "const"
                 value = obj.amp;
 
@@ -72,6 +75,11 @@ classdef Current_source < handle
                 a = 0.5*obj.period;
                 b = 0.2*obj.period;
                 value = obj.amp*exp(-(t-a).^2/b.^2);
+
+            elseif pulse_type == "new"
+                a = 0.5*obj.period;
+                b = 0.2*obj.period;
+                value = k*obj.amp*exp(-(t-a).^2/b.^2);    
             end
         end
 
