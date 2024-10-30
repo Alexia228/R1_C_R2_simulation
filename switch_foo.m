@@ -1,12 +1,12 @@
+
 function Array = switch_foo(Array, Probability)
 
-Range_part = Array == Probability.from; %Тут будут нули?
+Range_part = Array == Probability.from;
 Part = Array(Range_part);
 Dice = rand(size(Part));
-range = Dice < Probability.p;
+Probability2switch = Probability.p;
+range = Dice < Probability2switch;
 Part(range) = Probability.to;
 Array(Range_part) = Part;
 
 end
-
-

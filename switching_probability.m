@@ -1,16 +1,21 @@
 
-function [out_Ppn, out_Pnp] = switching_probability(force)
+function [out_Ppn, out_Pnp] = switching_probability(force, Switching_zone, time_step)
 %Ppn - вероятность перехода positive-negative
 %Pnp - вероятность перехода negative-positive
 
-Lp1 = 2; %Начала роста вероятности
-Lp2 = 7; %Конца роста вероятности
 
-Ln1 = -2;
-Ln2 = -35;
+Lp1 = Switching_zone(3); % positive left
+Lp2 = Switching_zone(4); % positive right
+
+Ln1 = Switching_zone(2); % negative right
+Ln2 = Switching_zone(1); % negative left
 
 Ppn = 1/(Ln2-Ln1)*force - Ln1/(Ln2-Ln1);
 Pnp = 1/(Lp2-Lp1)*force - Lp1/(Lp2-Lp1);
+
+Scale = 1000; % FIXME: magic constant
+Ppn = Ppn*time_step*Scale;
+Pnp = Pnp*time_step*Scale;
 
 range = Ppn > 1;
 Ppn(range) = 1;
