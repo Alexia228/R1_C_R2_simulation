@@ -15,38 +15,44 @@ ylim([-0.1 1.1])
 
 %%
 
+clc
 
-N = 10000;
+N = 1000;
 
 A = -ones(1, N);
 % A(2:2:end) = 1;
 voltage = [0:0.1:10 10:-0.1:-10 -10:0.1:0];
-
+voltageDVM = [0:0.1:10 10:-0.1:0 0:0.1:10 10:-0.1:-10 -10:0.1:0 0:-0.1:-10 -10:0.1:0];
+time = linspace(0, 100 , numel(voltageDVM));
 
 output = [];
-for  i = 1:numel(voltage)
+for  i = 1:numel(voltageDVM)
     
-    [Ppn, Pnp] = switching_probability(voltage(i));
+    [Ppn(i), Pnp(i)] = switching_probability(voltageDVM(i));
 
-
-    A = switch_foo(A, 1, Ppn);
-    A = switch_foo(A, -1, Pnp);
-
+    A = switch_foo(A, Ppn(i));
+    A = switch_foo(A, Pnp(i));
 
     output(i, :) = A;
 end
 
+hold on
 
-figure
-imagesc(output)
+% figure
+% imagesc(output)
 
 
-%%
+diel_part = 0.2*voltageDVM;
 
-Q = mean(output, 2);
+Q_total = 60/2; % uC/cm^2
+Q = mean(output, 2)*Q_total + diel_part';
 
-plot(voltage, Q)
-ylim([-1.1 1.1])
+% plot(time, voltageDVM)
+plot(voltageDVM, Q)
+
+ylim([-1.1 1.1]*Q_total)
+xlabel('E, a.u.')
+ylabel('P, uC/cm^2')
 
 %%
 
